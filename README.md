@@ -1,6 +1,8 @@
 # Bike-Rental-System
 First year projecct combilned by me later on , a project that is done separately from branches . Now merged by me
 
+how to run this project : 
+
 Prerequisites
     1. JDK 22: Ensure you have Java 22 installed on your system.
     2. Apache Tomcat 10.1.x: Download Tomcat 10.1 (Core zip/installer). This version is required for Jakarta EE 10 (Servlet 6.0).
