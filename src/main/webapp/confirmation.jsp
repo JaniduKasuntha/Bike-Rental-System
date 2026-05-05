@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="model.Booking" %>
+<%@ page import="com.bikerental.pgno55_bikerentalsystem.model.Booking" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -12,9 +12,17 @@
 <div class="container mt-5">
   <% Booking booking = (Booking) request.getAttribute("booking"); %>
   <% if (booking != null) { %>
-  <h2>Booking Confirmed</h2>
-  <p><%= booking.getDetails() %></p>
-  <a href="bookingHistory?userId=<%= booking.getUserId() %>" class="btn btn-secondary">View Booking History</a>
+  <div class="card shadow-sm p-4 mb-4">
+    <h2 class="text-success"><i class="bi bi-check-circle-fill"></i> Booking Confirmed</h2>
+    <hr>
+    <div class="booking-details">
+        <%= booking.getDetails() %>
+    </div>
+    <div class="mt-4">
+        <a href="${pageContext.request.contextPath}/bookingHistory?userId=<%= booking.getUserId() %>" class="btn btn-primary">View My Bookings</a>
+        <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-outline-secondary">Back to Home</a>
+    </div>
+  </div>
   <% } else if (request.getAttribute("bookings") != null) { %>
   <h2>Booking History</h2>
   <% List<Booking> bookings = (List<Booking>) request.getAttribute("bookings"); %>
@@ -41,8 +49,8 @@
       <td><%= b.getDetails() %></td>
       <td>Rs.<%= String.format("%.2f", b.calculatePrice()) %></td>
       <td>
-        <a href="booking?action=edit&bookingId=<%= b.getBookingId() %>" class="btn btn-sm btn-warning">Edit</a>
-        <form action="booking" method="post" style="display:inline;">
+        <a href="${pageContext.request.contextPath}/booking?action=edit&bookingId=<%= b.getBookingId() %>" class="btn btn-sm btn-warning">Edit</a>
+        <form action="${pageContext.request.contextPath}/booking" method="post" style="display:inline;">
           <input type="hidden" name="action" value="delete">
           <input type="hidden" name="bookingId" value="<%= b.getBookingId() %>">
           <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
@@ -57,9 +65,12 @@
   <% } %>
   <% } else { %>
   <div class="alert alert-danger" role="alert">
-    Failed to process booking. Please try again.
+    <h4 class="alert-heading">Processing Error</h4>
+    <p>We encountered an issue while retrieving your booking details. This could be due to a session timeout or a server-side error.</p>
+    <hr>
+    <a href="${pageContext.request.contextPath}/booking" class="btn btn-primary">Return to Booking</a>
+    <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-link">Back to Home</a>
   </div>
-  <a href="booking.jsp" class="btn btn-primary">Try Again</a>
   <% } %>
 </div>
 </body>

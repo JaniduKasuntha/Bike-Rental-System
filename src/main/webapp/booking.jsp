@@ -11,7 +11,7 @@
 <body>
 <div class="container mt-5">
     <h2>Book a Ride or Rental</h2>
-    <form action="booking" method="post" class="mt-4" onsubmit="return validateForm()">
+    <form action="${pageContext.request.contextPath}/booking" method="post" class="mt-4" onsubmit="return validateForm()">
         <input type="hidden" name="action" value="<%= request.getAttribute("bookingId") != null ? "update" : "create" %>">
         <% if (request.getAttribute("bookingId") != null) { %>
         <input type="hidden" name="bookingId" value="<%= request.getAttribute("bookingId") %>">
@@ -47,7 +47,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit Booking</button>
         <div class="mt-3">
-            <a href="index.jsp" class="btn btn-outline-secondary">
+            <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-outline-secondary">
                 <i class="fas fa-home me-1"></i>Back to Home
             </a>
         </div>

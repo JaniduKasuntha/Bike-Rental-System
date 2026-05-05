@@ -89,7 +89,7 @@ public class BookingServlet extends HttpServlet {
         } else if ("delete".equals(action)) {
             String bookingId = request.getParameter("bookingId");
             bookingManager.deleteBooking(bookingId);
-            response.sendRedirect("bookingHistory");
+            response.sendRedirect(request.getContextPath() + "/bookingHistory");
         }
     }
 }

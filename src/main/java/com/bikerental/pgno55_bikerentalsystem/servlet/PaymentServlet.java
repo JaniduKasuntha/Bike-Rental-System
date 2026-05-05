@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet({"/payment", "/"}) // Handles root URL
+@WebServlet("/payment") // Removed root mapping to allow index.jsp to be the landing page
 public class PaymentServlet extends HttpServlet {
     private PaymentService paymentService;  //Dependency (uses payment attribute temporary)
 
@@ -53,7 +53,7 @@ public class PaymentServlet extends HttpServlet {
                 WalletPayment payment = new WalletPayment(paymentId, amount, userId, "Pending", walletId);
                 paymentService.processPayment(payment);
             }
-            response.sendRedirect("transactionHistory?userId=" + userId);
+            response.sendRedirect(request.getContextPath() + "/transactionHistory?userId=" + userId);
         }
     }
 }

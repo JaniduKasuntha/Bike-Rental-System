@@ -147,7 +147,7 @@
                             <div class="icon-box"><i class="bi bi-person-plus"></i></div>
                             <h3>Registration</h3>
                             <p class="text-muted">Join our community and start riding today with quick sign-up.</p>
-                            <a href="register.jsp" class="btn btn-premium">Register Now</a>
+                            <a href="${pageContext.request.contextPath}/register.jsp" class="btn btn-premium">Register Now</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
@@ -155,7 +155,7 @@
                             <div class="icon-box"><i class="bi bi-box-arrow-in-right"></i></div>
                             <h3>Secure Login</h3>
                             <p class="text-muted">Access your account and manage your active rentals.</p>
-                            <a href="login" class="btn btn-premium">Login</a>
+                            <a href="${pageContext.request.contextPath}/login" class="btn btn-premium">Login</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
@@ -163,7 +163,7 @@
                             <div class="icon-box"><i class="bi bi-bicycle"></i></div>
                             <h3>Our Fleet</h3>
                             <p class="text-muted">Browse our wide range of electric and regular bikes.</p>
-                            <a href="bikes?action=view" class="btn btn-premium">View Bikes</a>
+                            <a href="${pageContext.request.contextPath}/bikes?action=view" class="btn btn-premium">View Bikes</a>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                             <div class="flex-grow-1">
                                 <h4>New Booking</h4>
                                 <p class="text-muted">Reserve a bike for a quick ride or a long-term rental.</p>
-                                <a href="booking" class="btn btn-premium" style="width: auto;">Book Now</a>
+                                <a href="${pageContext.request.contextPath}/booking" class="btn btn-premium" style="width: auto;">Book Now</a>
                             </div>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
                             <div class="flex-grow-1">
                                 <h4>Booking History</h4>
                                 <p class="text-muted">View and manage all your past and upcoming reservations.</p>
-                                <a href="AllBookings.jsp" class="btn btn-premium" style="width: auto;">View All</a>
+                                <a href="${pageContext.request.contextPath}/bookingHistory" class="btn btn-premium" style="width: auto;">View All</a>
                             </div>
                         </div>
                     </div>
@@ -205,28 +205,28 @@
                         <div class="feature-card">
                             <div class="icon-box"><i class="bi bi-person-vcard"></i></div>
                             <h5>User Profile</h5>
-                            <a href="user-management?action=profile" class="btn btn-premium btn-sm">My Account</a>
+                            <a href="${pageContext.request.contextPath}/user-management?action=profile" class="btn btn-premium btn-sm">My Account</a>
                         </div>
                     </div>
                     <div class="col-md-3 mb-4">
                         <div class="feature-card border-warning">
                             <div class="icon-box bg-warning"><i class="bi bi-gear"></i></div>
                             <h5>User Admin <span class="admin-badge">Admin</span></h5>
-                            <a href="user-management?action=list" class="btn btn-premium btn-sm">Manage Users</a>
+                            <a href="${pageContext.request.contextPath}/user-management?action=list" class="btn btn-premium btn-sm">Manage Users</a>
                         </div>
                     </div>
                     <div class="col-md-3 mb-4">
                         <div class="feature-card border-warning">
                             <div class="icon-box bg-warning"><i class="bi bi-journal-text"></i></div>
                             <h5>Activity Logs <span class="admin-badge">Admin</span></h5>
-                            <a href="admin/viewActivityLog.jsp" class="btn btn-premium btn-sm">View Logs</a>
+                            <a href="${pageContext.request.contextPath}/admin/logs" class="btn btn-premium btn-sm">View Logs</a>
                         </div>
                     </div>
                     <div class="col-md-3 mb-4">
                         <div class="feature-card border-warning">
                             <div class="icon-box bg-warning"><i class="bi bi-plus-circle"></i></div>
                             <h5>Inventory <span class="admin-badge">Admin</span></h5>
-                            <a href="bikes?action=add" class="btn btn-premium btn-sm">Add New Bike</a>
+                            <a href="${pageContext.request.contextPath}/bikes?action=add" class="btn btn-premium btn-sm">Add New Bike</a>
                         </div>
                     </div>
                 </div>

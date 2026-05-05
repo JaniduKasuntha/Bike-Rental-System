@@ -71,7 +71,7 @@
                 <i class="fas fa-users text-3xl text-indigo-600"></i>
                 <h1 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent">View Users</h1>
             </div>
-            <a href="<%= request.getContextPath() %>/logout" class="bikerental-button flex items-center">
+            <a href="${pageContext.request.contextPath}/user-management?action=logout" class="bikerental-button flex items-center">
                 <i class="fas fa-sign-out-alt mr-2"></i> Logout
             </a>
         </div>
@@ -89,7 +89,6 @@
             <table class="min-w-full border-collapse">
                 <thead>
                 <tr class="table-header">
-                    <th class="py-3 px-6 text-left">ID</th>
                     <th class="py-3 px-6 text-left">Username</th>
                     <th class="py-3 px-6 text-left">Email</th>
                     <th class="py-3 px-6 text-left">Role</th>
@@ -103,20 +102,22 @@
                         for (User user : users) {
                 %>
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
-                    <td class="py-4 px-6"><%= user.getId() %></td>
                     <td class="py-4 px-6"><%= user.getUsername() %></td>
                     <td class="py-4 px-6"><%= user.getEmail() %></td>
-                    <td class="py-4 px-6"><%= user.getRole() %></td>
+                    <td class="py-4 px-6"><%= user.getRole() != null ? user.getRole() : "User" %></td>
                     <td class="py-4 px-6 flex space-x-2">
-                        <a href="<%= request.getContextPath() %>/admin/editUser?id=<%= user.getId() %>"
+                        <a href="${pageContext.request.contextPath}/user-management?action=edit&username=<%= user.getUsername() %>"
                            class="text-indigo-600 hover:text-indigo-800">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <a href="<%= request.getContextPath() %>/admin/deleteUser?id=<%= user.getId() %>"
-                           class="text-red-600 hover:text-red-800"
-                           onclick="return confirm('Are you sure you want to delete this user?')">
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </a>
+                        <form action="${pageContext.request.contextPath}/user-management" method="post" class="m-0 d-inline">
+                            <input type="hidden" name="action" value="deleteUser">
+                            <input type="hidden" name="username" value="<%= user.getUsername() %>">
+                            <button type="submit" class="btn btn-link text-red-600 p-0 m-0"
+                                   onclick="return confirm('Are you sure you want to delete this user?')">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 <%
@@ -124,7 +125,7 @@
                 } else {
                 %>
                 <tr>
-                    <td colspan="5" class="py-4 px-6 text-center text-gray-500">No users found.</td>
+                    <td colspan="4" class="py-4 px-6 text-center text-gray-500">No users found.</td>
                 </tr>
                 <% } %>
                 </tbody>
@@ -132,8 +133,11 @@
         </div>
 
         <div class="mt-6">
-            <a href="<%= request.getContextPath() %>/admin/addUser" class="bikerental-button flex items-center">
+            <a href="${pageContext.request.contextPath}/user-management?action=create" class="bikerental-button flex items-center d-inline-flex">
                 <i class="fas fa-plus mr-2"></i> Add New User
+            </a>
+            <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-outline-secondary ms-2">
+                <i class="fas fa-home me-2"></i> Back to Home
             </a>
         </div>
     </div>

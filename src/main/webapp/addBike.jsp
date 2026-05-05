@@ -1,286 +1,275 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>BikeRental - Add Bike</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    :root {
-      --primary: #4f46e5;
-      --primary-dark: #4338ca;
-      --secondary: #06b6d4;
-      --accent: #f97316;
-      --background: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --text-light: #64748b;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Bike | Bike Sharing Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--background);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            background: #f0f2f5;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
 
-    .main-content {
-      flex: 1;
-    }
+        .navbar-premium {
+            background: var(--primary-gradient);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
 
-    .bikerental-header {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+        .card-premium {
+            background: var(--glass-bg);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
 
-    .bikerental-logo {
-      font-weight: 800;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -1px;
-    }
+        .card-header-premium {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border: none;
+        }
 
-    .bikerental-card {
-      background-color: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-    }
+        .form-label {
+            font-weight: 600;
+            color: #4a5568;
+        }
 
-    .bikerental-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-    }
+        .form-control, .form-select {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
 
-    .form-group {
-      margin-bottom: 2rem;
-      position: relative;
-    }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
 
-    .form-label {
-      position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      font-weight: 500;
-      color: var(--text-light);
-      transition: all 0.3s ease;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        .btn-premium {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
 
-    .form-input {
-      width: 100%;
-      padding: 1rem 1rem 0.5rem;
-      border: none;
-      border-bottom: 2px solid #e2e8f0;
-      background-color: transparent;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      color: var(--text);
-    }
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.3);
+            color: white;
+        }
 
-    .form-input:focus {
-      outline: none;
-      border-bottom: 2px solid transparent;
-      border-image: linear-gradient(135deg, var(--primary), var(--secondary)) 1;
-    }
+        .input-icon-group {
+            position: relative;
+        }
 
-    .form-input:focus + .form-label,
-    .form-input:not(:placeholder-shown) + .form-label {
-      top: -0.75rem;
-      left: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--primary);
-      font-weight: 600;
-    }
+        .input-icon-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
 
-    .form-label .fas {
-      font-size: 0.875rem;
-    }
+        .input-icon-group input, .input-icon-group select {
+            padding-left: 2.8rem;
+        }
 
-    .bikerental-button {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 0.75rem 1.5rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+        .type-toggle-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
 
-    .bikerental-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
-    }
-
-    .nav-link {
-      color: var(--text);
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .nav-link:hover, .nav-link.active {
-      background-color: rgba(79, 70, 229, 0.1);
-      color: var(--primary);
-    }
-
-    .nav-link .icon {
-      margin-right: 0.5rem;
-    }
-
-    .bikerental-footer {
-      background-color: #1e293b;
-      color: #e2e8f0;
-    }
-
-    .bg-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-  </style>
+        .type-toggle-card.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            color: #667eea;
+        }
+    </style>
 </head>
-<body class="bg-pattern">
-<!-- Header -->
-<header class="bikerental-header py-4 px-6 shadow-sm">
-  <div class="container mx-auto flex justify-between items-center">
-    <div class="flex items-center space-x-2">
-      <i class="fas fa-bicycle text-2xl text-indigo-600"></i>
-      <h1 class="bikerental-logo text-2xl">BikeRental</h1>
-    </div>
-    <nav class="flex items-center space-x-2">
-      <a href="addBike.jsp" class="nav-link active">
-        <i class="fas fa-plus-circle icon"></i>Add Bike
-      </a>
-      <a href="viewBikes" class="nav-link">
-        <i class="fas fa-list icon"></i>View Bikes
-      </a>
-      <a href="admin/viewUsers" class="nav-link">
-        <i class="fas fa-users icon"></i>Manage Users
-      </a>
-      <a href="admin/viewActivityLog" class="nav-link">
-        <i class="fas fa-clipboard-list icon"></i>Activity Log
-      </a>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-premium mb-5">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="${pageContext.request.contextPath}/index.jsp">
+                <i class="bi bi-bicycle me-2"></i>Bike Sharing Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto d-flex gap-2">
+                    <a href="${pageContext.request.contextPath}/bikes?action=view" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        <i class="bi bi-list me-1"></i>View Inventory
+                    </a>
+                    <a href="${pageContext.request.contextPath}/user-management?action=list" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        <i class="bi bi-people me-1"></i>Users
+                    </a>
+                    <a href="${pageContext.request.contextPath}/admin/logs" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        <i class="bi bi-journal-text me-1"></i>Logs
+                    </a>
+                </div>
+            </div>
+        </div>
     </nav>
-  </div>
-</header>
 
-<!-- Main Content -->
-<div class="main-content container mx-auto py-12 px-4">
-  <div class="max-w-lg mx-auto">
-    <div class="bikerental-card p-8">
-      <div class="text-center mb-8">
-        <h2 class="text-2xl font-bold text-gray-800">Add a New Bike</h2>
-        <p class="text-gray-500 mt-2">Enter the details of the bike you want to add to the fleet</p>
-      </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card card-premium">
+                    <div class="card-header-premium">
+                        <h2 class="mb-1">Add New Bike</h2>
+                        <p class="mb-0 opacity-75">Expand your fleet with premium quality bikes</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        
+                        <c:if test="${not empty error}">
+                            <div class="alert alert-danger alert-dismissible fade show rounded-3 mb-4" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i> ${error}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </c:if>
 
-      <% if (request.getAttribute("error") != null) { %>
-      <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
-        <div class="flex items-center">
-          <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
-          <p class="text-red-700"><%= request.getAttribute("error") %></p>
+                        <form action="${pageContext.request.contextPath}/bikes" method="post">
+                            <input type="hidden" name="action" value="add">
+                            
+                            <!-- Bike ID -->
+                            <div class="mb-4">
+                                <label for="bikeId" class="form-label">Bike Identifier (Unique)</label>
+                                <div class="input-icon-group">
+                                    <i class="bi bi-hash"></i>
+                                    <input type="text" class="form-control" id="bikeId" name="bikeId" placeholder="e.g. B-101" required>
+                                </div>
+                            </div>
+
+                            <!-- Bike Type Selector -->
+                            <div class="mb-4">
+                                <label class="form-label d-block mb-3">Select Bike Category</label>
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <div class="type-toggle-card active" onclick="setBikeType('Regular')">
+                                            <i class="bi bi-bicycle fs-4 d-block mb-1"></i>
+                                            <span class="fw-bold">Regular</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="type-toggle-card" onclick="setBikeType('Electric')">
+                                            <i class="bi bi-lightning-charge fs-4 d-block mb-1"></i>
+                                            <span class="fw-bold">Electric</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="bikeType" name="bikeType" value="Regular">
+                            </div>
+
+                            <!-- Location -->
+                            <div class="mb-4">
+                                <label for="location" class="form-label">Station Location</label>
+                                <div class="input-icon-group">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Central Park North" required>
+                                </div>
+                            </div>
+
+                            <!-- Price Per Hour -->
+                            <div class="mb-4">
+                                <label for="pricePerHour" class="form-label">Price per Hour ($)</label>
+                                <div class="input-icon-group">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    <input type="number" step="0.01" class="form-control" id="pricePerHour" name="pricePerHour" placeholder="0.00" required>
+                                </div>
+                            </div>
+
+                            <!-- Conditional Fields: Battery Range -->
+                            <div id="electricFields" class="mb-4" style="display: none;">
+                                <label for="batteryRange" class="form-label">Battery Range (Kilometers)</label>
+                                <div class="input-icon-group">
+                                    <i class="bi bi-battery-half"></i>
+                                    <input type="number" class="form-control" id="batteryRange" name="batteryRange" placeholder="e.g. 50">
+                                </div>
+                            </div>
+
+                            <!-- Conditional Fields: Gear Type -->
+                            <div id="regularFields" class="mb-4">
+                                <label for="gearType" class="form-label">Gear Configuration</label>
+                                <div class="input-icon-group">
+                                    <i class="bi bi-gear-wide-connected"></i>
+                                    <input type="text" class="form-control" id="gearType" name="gearType" placeholder="e.g. 7-Speed Shimano" required>
+                                </div>
+                            </div>
+
+                            <!-- Availability -->
+                            <div class="mb-4">
+                                <div class="form-check form-switch p-0 ms-0">
+                                    <div class="d-flex align-items-center justify-content-between bg-light p-3 rounded-3 border">
+                                        <div>
+                                            <label class="form-check-label fw-bold" for="isAvailable">Set as Available</label>
+                                            <p class="small text-muted mb-0">Immediately list this bike for rentals</p>
+                                        </div>
+                                        <input class="form-check-input ms-0 fs-4" type="checkbox" id="isAvailable" name="isAvailable" value="true" checked>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-premium w-100 py-3">
+                                <i class="bi bi-plus-lg me-2"></i>Register Bike in System
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <% } %>
-
-      <form action="addBike" method="post">
-        <div class="form-group">
-          <input type="text" id="id" name="id" class="form-input" required placeholder=" " />
-          <label class="form-label" for="id">
-            <i class="fas fa-fingerprint text-indigo-500"></i>Bike ID
-          </label>
-        </div>
-
-        <div class="form-group">
-          <input type="text" id="model" name="model" class="form-input" required placeholder=" " />
-          <label class="form-label" for="model">
-            <i class="fas fa-tag text-indigo-500"></i>Model
-          </label>
-        </div>
-
-        <div class="form-group">
-          <input type="text" id="location" name="location" class="form-input" required placeholder=" " />
-          <label class="form-label" for="location">
-            <i class="fas fa-map-marker-alt text-indigo-500"></i>Location
-          </label>
-        </div>
-
-        <div class="form-group">
-          <select id="status" name="status" class="form-input" required>
-            <option value="" disabled selected hidden></option>
-            <option value="Available">Available</option>
-            <option value="Rented">Rented</option>
-            <option value="Maintenance">Maintenance</option>
-          </select>
-          <label class="form-label" for="status">
-            <i class="fas fa-info-circle text-indigo-500"></i>Status
-          </label>
-        </div>
-
-        <div class="form-group">
-          <input type="number" id="price" step="0.01" name="price" class="form-input" required placeholder=" " />
-          <label class="form-label" for="price">
-            <i class="fas fa-dollar-sign text-indigo-500"></i>Price (per hour)
-          </label>
-        </div>
-
-        <div class="mt-8">
-          <button type="submit" class="bikerental-button w-full flex justify-center items-center">
-            <i class="fas fa-bicycle mr-2"></i>
-            Add Bike
-          </button>
-        </div>
-      </form>
-
-      <div class="mt-6 text-center">
-        <a href="viewBikes" class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center justify-center">
-          <i class="fas fa-arrow-left mr-2"></i>
-          View All Bikes
-        </a>
-      </div>
     </div>
-  </div>
-</div>
 
-<!-- Footer -->
-<footer class="bikerental-footer py-8 mt-12">
-  <div class="container mx-auto px-4">
-    <div class="flex flex-col md:flex-row justify-between items-center">
-      <div class="mb-4 md:mb-0">
-        <div class="flex items-center justify-center md:justify-start">
-          <i class="fas fa-bicycle text-xl text-indigo-400 mr-2"></i>
-          <span class="font-bold text-xl">BikeRental</span>
-        </div>
-        <p class="text-gray-400 mt-2 text-center md:text-left">Making bike rental simple and accessible.</p>
-      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function setBikeType(type) {
+            document.getElementById('bikeType').value = type;
+            
+            // Toggle visual classes
+            const cards = document.querySelectorAll('.type-toggle-card');
+            cards.forEach(card => card.classList.remove('active'));
+            event.currentTarget.classList.add('active');
 
-      <div class="flex space-x-4">
-        <a href="#" class="text-gray-400 hover:text-white transition">
-          <i class="fab fa-facebook text-xl"></i>
-        </a>
-        <a href="#" class="text-gray-400 hover:text-white transition">
-          <i class="fab fa-twitter text-xl"></i>
-        </a>
-        <a href="#" class="text-gray-400 hover:text-white transition">
-          <i class="fab fa-instagram text-xl"></i>
-        </a>
-      </div>
-    </div>
+            // Toggle field visibility
+            const electricFields = document.getElementById('electricFields');
+            const regularFields = document.getElementById('regularFields');
+            const batteryInput = document.getElementById('batteryRange');
+            const gearInput = document.getElementById('gearType');
 
-    <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-      <p>© 2025 BikeRental. All rights reserved.</p>
-    </div>
-  </div>
-</footer>
+            if (type === 'Electric') {
+                electricFields.style.display = 'block';
+                regularFields.style.display = 'none';
+                batteryInput.required = true;
+                gearInput.required = false;
+            } else {
+                electricFields.style.display = 'none';
+                regularFields.style.display = 'block';
+                batteryInput.required = false;
+                gearInput.required = true;
+            }
+        }
+    </script>
 </body>
-</html>
+</html>

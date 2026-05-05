@@ -91,7 +91,7 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>All Bookings (FIFO Order)</h5>
             <div>
-                <form action="bookingHistory" method="GET" class="d-inline">
+                <form action="${pageContext.request.contextPath}/bookingHistory" method="GET" class="d-inline">
                     <div class="input-group">
                         <input type="text" name="userId" class="form-control" placeholder="Search by User ID...">
                         <button class="btn btn-primary" type="submit">
@@ -99,7 +99,7 @@
                         </button>
                     </div>
                 </form>
-                <a href="booking?action=create" class="btn btn-success ms-2">
+                <a href="${pageContext.request.contextPath}/booking?action=create" class="btn btn-success ms-2">
                     <i class="fas fa-plus me-1"></i>New Booking
                 </a>
             </div>
@@ -157,10 +157,10 @@
                             <span class="status-badge status-active">Active</span>
                         </td>
                         <td class="action-buttons">
-                            <a href="booking?action=edit&bookingId=<%= b.getBookingId() %>" class="btn btn-sm btn-primary" title="Edit">
+                            <a href="${pageContext.request.contextPath}/booking?action=edit&bookingId=<%= b.getBookingId() %>" class="btn btn-sm btn-primary" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <form action="booking" method="post" style="display:inline;">
+                            <form action="${pageContext.request.contextPath}/booking" method="post" style="display:inline;">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="bookingId" value="<%= b.getBookingId() %>">
                                 <button type="submit" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this booking?')">
@@ -198,7 +198,7 @@
 </script>
 <div class="card-header d-flex justify-content-between align-items-center">
     <div>
-        <a href="index.jsp" class="btn btn-outline-secondary me-2">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-outline-secondary me-2">
             <i class="fas fa-home me-1"></i>Back to Home
         </a>
     </div>

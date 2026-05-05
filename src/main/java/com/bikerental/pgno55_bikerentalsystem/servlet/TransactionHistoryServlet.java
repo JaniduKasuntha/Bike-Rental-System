@@ -54,11 +54,11 @@ public class TransactionHistoryServlet extends HttpServlet {
             double newAmount = Double.parseDouble(request.getParameter("newAmount"));
             String newStatus = request.getParameter("newStatus");
             paymentService.updatePayment(paymentId, newAmount, newStatus);
-            response.sendRedirect("transactionHistory?userId=" + userId);
+            response.sendRedirect(request.getContextPath() + "/transactionHistory?userId=" + userId);
         } else if ("refund".equals(action)) {
             String paymentId = request.getParameter("paymentId");
             paymentService.refundTransaction(paymentId);
-            response.sendRedirect("transactionHistory?userId=" + userId);
+            response.sendRedirect(request.getContextPath() + "/transactionHistory?userId=" + userId);
         } else if ("all".equals(action)) {
             // Reload all transactions
             List<Payment> transactions = paymentService.getAllTransactions();
@@ -69,7 +69,7 @@ public class TransactionHistoryServlet extends HttpServlet {
             request.setAttribute("transactions", sortedTransactions);
             request.getRequestDispatcher("/WEB-INF/views/transactionHistory.jsp").forward(request, response);
         } else {
-            response.sendRedirect("transactionHistory?userId=" + userId);
+            response.sendRedirect(request.getContextPath() + "/transactionHistory?userId=" + userId);
         }
     }
 }
